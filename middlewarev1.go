@@ -5,6 +5,7 @@ import (
 	"github.com/go-chi/render"
 	"github.com/golang/glog"
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -22,7 +23,7 @@ func (c *Client) HandlerV1(h http.Handler) http.Handler {
 		setClient(r, c)
 
 		if !IsAuthenticated(r) {
-			genRedirectUrl := fmt.Sprintf("%s/login?service=%s%s", RedirectUrl, r.Host, LoginUri)
+			genRedirectUrl := fmt.Sprintf("%s/login?service=%s", RedirectUrl, url.QueryEscape("http://"+r.Host+LoginUri))
 			render.JSON(w, r, map[string]string{"code": strconv.Itoa(REDIRECT_CODE), "data": genRedirectUrl, "msg": "redirect login."})
 			return
 		}
