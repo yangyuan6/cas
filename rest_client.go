@@ -78,7 +78,7 @@ func (c *RestClient) HandleFunc(h func(http.ResponseWriter, *http.Request)) http
 // RequestGrantingTicket returns a new TGT, if the username and password authentication was successful
 func (c *RestClient) RequestGrantingTicket(username string, password string) (TicketGrantingTicket, error) {
 	// request:
-	// POST /cas/v1/tickets HTTP/1.0
+	// POST /cas/v1/Tickets HTTP/1.0
 	// username=battags&password=password&additionalParam1=paramvalue
 
 	endpoint, err := c.urlScheme.RestGrantingTicket()
@@ -114,7 +114,7 @@ func (c *RestClient) RequestGrantingTicket(username string, password string) (Ti
 // RequestServiceTicket requests a service ticket with the TGT for the configured service url
 func (c *RestClient) RequestServiceTicket(tgt TicketGrantingTicket) (ServiceTicket, error) {
 	// request:
-	// POST /cas/v1/tickets/{TGT id} HTTP/1.0
+	// POST /cas/v1/Tickets/{TGT id} HTTP/1.0
 	// service={form encoded parameter for the service url}
 	endpoint, err := c.urlScheme.RestServiceTicket(string(tgt))
 	if err != nil {
@@ -154,7 +154,7 @@ func (c *RestClient) ValidateServiceTicket(st ServiceTicket) (*AuthenticationRes
 
 // Logout destroys the given granting ticket
 func (c *RestClient) Logout(tgt TicketGrantingTicket) error {
-	// DELETE /cas/v1/tickets/TGT-fdsjfsdfjkalfewrihfdhfaie HTTP/1.0
+	// DELETE /cas/v1/Tickets/TGT-fdsjfsdfjkalfewrihfdhfaie HTTP/1.0
 	endpoint, err := c.urlScheme.RestLogout(string(tgt))
 	if err != nil {
 		return err

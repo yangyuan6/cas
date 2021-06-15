@@ -393,8 +393,8 @@ func TestLogOut(t *testing.T) {
 			sessionCookieName, setCookie)
 	}
 
-	if _, err := client.tickets.Read(ticket.Name); err != nil {
-		t.Errorf("Expected tickets.Read error to be nil, got %v", err)
+	if _, err := client.Tickets.Read(ticket.Name); err != nil {
+		t.Errorf("Expected Tickets.Read error to be nil, got %v", err)
 	}
 
 	// Request Logout
@@ -416,8 +416,8 @@ func TestLogOut(t *testing.T) {
 		t.Errorf("Expected Second HTTP response code to be <%v>, got <%v>", http.StatusOK, w.Code)
 	}
 
-	if _, err := client.tickets.Read(ticket.Name); err != ErrInvalidTicket {
-		t.Errorf("Expected tickets.Read error to be ErrInvalidTicket, got %v", err)
+	if _, err := client.Tickets.Read(ticket.Name); err != ErrInvalidTicket {
+		t.Errorf("Expected Tickets.Read error to be ErrInvalidTicket, got %v", err)
 	}
 
 	expected := fmt.Sprintf("%s://%s/logout", u.Scheme, u.Host)
@@ -482,8 +482,8 @@ func TestSingleLogOut(t *testing.T) {
 		t.Errorf("Expected First HTTP response code to be <%v>, got <%v>", http.StatusOK, w.Code)
 	}
 
-	if _, err := client.tickets.Read(ticket.Name); err != nil {
-		t.Errorf("Expected tickets.Read error to be nil, got %v", err)
+	if _, err := client.Tickets.Read(ticket.Name); err != nil {
+		t.Errorf("Expected Tickets.Read error to be nil, got %v", err)
 	}
 
 	// Single Logout Request
@@ -509,7 +509,7 @@ func TestSingleLogOut(t *testing.T) {
 		t.Errorf("Expected Second HTTP response code to be <%v>, got <%v>", http.StatusOK, w.Code)
 	}
 
-	if _, err := client.tickets.Read(ticket.Name); err != ErrInvalidTicket {
-		t.Errorf("Expected tickets.Read error to be ErrInvalidTicket, got %v", err)
+	if _, err := client.Tickets.Read(ticket.Name); err != ErrInvalidTicket {
+		t.Errorf("Expected Tickets.Read error to be ErrInvalidTicket, got %v", err)
 	}
 }

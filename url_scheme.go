@@ -24,7 +24,7 @@ func NewDefaultURLScheme(base *url.URL) *DefaultURLScheme {
 		LogoutPath:          "logout",
 		ValidatePath:        "validate",
 		ServiceValidatePath: "serviceValidate",
-		RestEndpoint:        path.Join("v1", "tickets"),
+		RestEndpoint:        path.Join("v1", "Tickets"),
 	}
 }
 

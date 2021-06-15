@@ -9,7 +9,7 @@ import (
 
 func TestRequestGrantingTicket(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/cas/v1/tickets" || r.Method != "POST" {
+		if r.URL.Path != "/cas/v1/Tickets" || r.Method != "POST" {
 			w.WriteHeader(404)
 			return
 		}
@@ -24,7 +24,7 @@ func TestRequestGrantingTicket(t *testing.T) {
 			return
 		}
 
-		w.Header().Set("Location", "/cas/v1/tickets/TGT-abc")
+		w.Header().Set("Location", "/cas/v1/Tickets/TGT-abc")
 		w.WriteHeader(201)
 	}))
 	defer server.Close()
@@ -56,7 +56,7 @@ func TestRequestGrantingTicket(t *testing.T) {
 
 func TestRequestServiceTicket(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/cas/v1/tickets/TGT-abc" || r.Method != "POST" {
+		if r.URL.Path != "/cas/v1/Tickets/TGT-abc" || r.Method != "POST" {
 			w.WriteHeader(404)
 			return
 		}
@@ -125,7 +125,7 @@ func TestRequestServiceTicket(t *testing.T) {
 
 func TestValidateService(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/cas/v1/tickets/TGT-abc" || r.Method != "DELETE" {
+		if r.URL.Path != "/cas/v1/Tickets/TGT-abc" || r.Method != "DELETE" {
 			w.WriteHeader(404)
 			return
 		}
@@ -157,7 +157,7 @@ func TestValidateService(t *testing.T) {
 
 func TestLogout(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/cas/v1/tickets/TGT-abc" || r.Method != "DELETE" {
+		if r.URL.Path != "/cas/v1/Tickets/TGT-abc" || r.Method != "DELETE" {
 			w.WriteHeader(404)
 			return
 		}

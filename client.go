@@ -22,7 +22,7 @@ type Options struct {
 
 // Client implements the main protocol
 type Client struct {
-	tickets   TicketStore
+	Tickets   TicketStore
 	client    *http.Client
 	urlScheme URLScheme
 	cookie    *http.Cookie
@@ -80,7 +80,7 @@ func NewClient(options *Options) *Client {
 	}
 
 	return &Client{
-		tickets:     tickets,
+		Tickets:     tickets,
 		client:      client,
 		urlScheme:   urlScheme,
 		cookie:      cookie,
@@ -227,7 +227,7 @@ func (c *Client) validateTicket(ticket string, service *http.Request) error {
 		return err
 	}
 
-	if err := c.tickets.Write(ticket, success); err != nil {
+	if err := c.Tickets.Write(ticket, success); err != nil {
 		return err
 	}
 
@@ -242,7 +242,7 @@ func (c *Client) getSession(w http.ResponseWriter, r *http.Request) {
 	cookie := c.getCookie(w, r)
 
 	if s, ok := c.sessions.Get(cookie.Value); ok {
-		if t, err := c.tickets.Read(s); err == nil {
+		if t, err := c.Tickets.Read(s); err == nil {
 			if glog.V(1) {
 				glog.Infof("Re-used ticket %s for %s", s, t.User)
 			}
@@ -251,7 +251,7 @@ func (c *Client) getSession(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			if glog.V(2) {
-				glog.Infof("Ticket %v not in %T: %v", s, c.tickets, err)
+				glog.Infof("Ticket %v not in %T: %v", s, c.Tickets, err)
 			}
 
 			if glog.V(1) {
@@ -272,7 +272,7 @@ func (c *Client) getSession(w http.ResponseWriter, r *http.Request) {
 
 		c.setSession(cookie.Value, ticket)
 
-		if t, err := c.tickets.Read(ticket); err == nil {
+		if t, err := c.Tickets.Read(ticket); err == nil {
 			if glog.V(1) {
 				glog.Infof("Validated ticket %s for %s", ticket, t.User)
 			}
@@ -281,7 +281,7 @@ func (c *Client) getSession(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			if glog.V(2) {
-				glog.Infof("Ticket %v not in %T: %v", ticket, c.tickets, err)
+				glog.Infof("Ticket %v not in %T: %v", ticket, c.Tickets, err)
 			}
 
 			if glog.V(1) {
@@ -356,10 +356,10 @@ func (c *Client) clearSession(w http.ResponseWriter, r *http.Request) {
 	cookie := c.getCookie(w, r)
 
 	if serviceTicket, ok := c.sessions.Get(cookie.Value); ok {
-		if err := c.tickets.Delete(serviceTicket); err != nil {
-			fmt.Printf("Failed to remove %v from %T: %v\n", cookie.Value, c.tickets, err)
+		if err := c.Tickets.Delete(serviceTicket); err != nil {
+			fmt.Printf("Failed to remove %v from %T: %v\n", cookie.Value, c.Tickets, err)
 			if glog.V(2) {
-				glog.Errorf("Failed to remove %v from %T: %v", cookie.Value, c.tickets, err)
+				glog.Errorf("Failed to remove %v from %T: %v", cookie.Value, c.Tickets, err)
 			}
 		}
 

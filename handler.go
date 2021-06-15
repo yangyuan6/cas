@@ -66,7 +66,7 @@ func (ch *clientHandler) performSingleLogout(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	if err := ch.c.tickets.Delete(logoutRequest.SessionIndex); err != nil {
+	if err := ch.c.Tickets.Delete(logoutRequest.SessionIndex); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
