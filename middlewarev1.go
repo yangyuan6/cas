@@ -11,7 +11,7 @@ import (
 var RedirectUrl = ""
 var LoginUri = ""
 
-const REDIRECT_CODE = 1088
+const REDIRECT_CODE = 401
 
 func (c *Client) HandlerV1(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
